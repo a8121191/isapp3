@@ -34,7 +34,3 @@ body {
     margin-bottom: 20px;
   }
 
-  .home-button {
-    display: flex;
-    justify-content: flex-end;
-  }
