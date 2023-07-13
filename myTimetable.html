@@ -30,22 +30,22 @@
             html = html + '<table border = "1">';
 
             for (var i = 0; i <= 5; i++) {
-                html = html + '<tr>'
+                html = html + '<tr>';
 
                 for (var j = 0; j <= 5; j++) {
-                    var date = ''
+                    var date = '';
                     if (j == 0) {
                         date = '';
                     } else if (j == 1) {
-                        date = '月'
+                        date = '月';
                     } else if (j == 2) {
-                        date = '火'
+                        date = '火';
                     } else if (j == 3) {
-                        date = '水'
+                        date = '水';
                     } else if (j == 4) {
-                        date = '木'
+                        date = '木';
                     } else if (j == 5) {
-                        date = '金'
+                        date = '金';
                     }
 
                     if (i == 0) {
@@ -54,18 +54,18 @@
                         html = html + '<td>' + i + '</td>';
                     } else {
                         var block = date + String(i);
-                        var sql = `select schedule from Plans where block = '${block}' AND user_id = '${me.id}'`
+                        var sql = `select schedule from Plans where block = '${block}' AND user_id = '${me.id}'`;
                         var scheduleArray = await osql.connect(sql);
-                        var scheduleEach = ''
+                        var scheduleEach = '';
                         if (scheduleArray.length != 0) {
                             scheduleEach = scheduleArray[0].schedule;
                         }
-                        html = html + '<td>' + scheduleEach + '</td>'
+                        html = html + '<td>' + scheduleEach + '</td>';
                     }
                 }
-                html = html + '</tr>'
+                html = html + '</tr>';
             }
-            html = html + '</table>'
+            html = html + '</table>';
 
             document.getElementById('result').innerHTML = html;
         }
