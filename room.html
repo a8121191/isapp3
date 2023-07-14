@@ -57,6 +57,10 @@
             document.getElementById('comments').innerHTML = html;
         }
 
+        async function toGroup() {
+            location.href = `groupTimetable.html?groupID=${roomId}`;
+        }
+
     </script>
 
 </head>
@@ -74,6 +78,11 @@
     </div>
     <br>
     <div id="comments"></div>
+    <div>
+        <h2>groupへ移動</h2>
+        <button onclick="toGroup()">enter group</button>
+    </div>
+
 </body>
 
 </html>
