@@ -55,15 +55,17 @@
                         html = html + '<td>' + i + '</td>';
                     } else {
                         var block = date + String(i);
-                        var sql = `select * from Participation inner join Plans on Participation.user_id = Plans.user_id where block = '${block}' AND group_id = ${groupId}`;
+                        var sql = `select availability from Participation inner join Plans on Participation.user_id = Plans.user_id where block = '${block}' AND group_id = ${groupId}`;
                         var objects = await osql.connect(sql);
                         console.log(objects)
 
-                        var scheduleEach = '';
-                        /*if (objects.length != 0) {
-                            scheduleEach = objects[0];
-                        }*/
-                        html = html + '<td>' + scheduleEach + '</td>';
+                        var availability = '';
+                        if (objects.length != 0) {
+                            for (var k = 0; k < objects.length; k++) {
+                                availability = objects[k];
+                            }
+                        }
+                        html = html + '<td>' + availability + '</td>';
                     }
                 }
                 html = html + '</tr>';
