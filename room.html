@@ -3,6 +3,7 @@
 <html>
 
 <head>
+    <link rel="stylesheet" type="text/css" href="login.css">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <script type="text/javascript" src="lib/jquery.min.js"></script>
@@ -66,12 +67,16 @@
 </head>
 
 <body>
-    <h1>talkroom <span id="roomname"></span></h1>
-    <div style="text-align: right;">
-        ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
-        <a href="index.html">top</a>
-    </div>
-    <hr>
+    <header>
+        <div style="text-align: right;">
+            ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
+            <a href="index.html">top</a>
+        </div>
+        <h1 class="title">共有時間割ルーム<br>チーム： <span id="roomname"></span></h1>
+
+    </header>
+
+    <br>
     <div>
         <input id="comment" type="text">
         <button onclick="newComment()">new comment</button>
@@ -82,7 +87,8 @@
         <h2>groupへ移動</h2>
         <button onclick="toGroup()">enter group</button>
     </div>
-
+    
+    <a href="robby.html" class="footer-button">戻る</a>
 </body>
 
 </html>
