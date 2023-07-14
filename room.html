@@ -40,7 +40,7 @@
         }
 
         async function refreshComments() {
-            var sql = `select * from Comments where roomId = ${roomId} order by time desc limit 10;`;
+            var sql = `select * from Users where roomId = ${roomId} order by time desc limit 10;`;
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';

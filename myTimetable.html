@@ -72,6 +72,22 @@
             document.getElementById('result').innerHTML = html;
         }
 
+        function cellClicked(row, column) {
+            if (row >= 2 && row <= 6 && column >= 2 && column <= 6) {
+                var url = 'cell.html?row=' + row + '&column=' + column;
+
+                // cell.htmlに遷移
+                window.location.href = url;
+            }
+        }
+        
+         // セルがクリックされたときにcellClicked関数を呼び出す
+         $(document).on('click', 'table td', function () {
+            var row = $(this).parent().index() + 1;
+            var column = $(this).index() + 1;
+
+            cellClicked(row, column);
+        });
     </script>
 
 </head>
