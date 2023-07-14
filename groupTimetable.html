@@ -55,7 +55,7 @@
                         html = html + '<td>' + i + '</td>';
                     } else {
                         var block = date + String(i);
-                        var sql = `select user_id from Participation where block = '${block}' AND group_id = ${groupId}`;
+                        var sql = `select * from Participation inner join Plans on Participation.user_id = Plans.user_id where block = '${block}' AND group_id = ${groupId}`;
                         var objects = await osql.connect(sql);
                         console.log(objects)
 
