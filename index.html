@@ -3,6 +3,10 @@
 <html>
 
 <head>
+    <title>時間割共有システム</title>
+    <link rel="stylesheet" type="text/css" href="login.css">
+
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <script type="text/javascript" src="lib/jquery.min.js"></script>
@@ -29,15 +33,30 @@
 </head>
 
 <body>
-    <h1>時間割共有システム</h1>
+    <header>
+        <h1>ようこそ！時間割共有システムへ！</h1>
+      </header>
+      <main>
+        <div class="button-container">
+          <a href="creategroup.html" class="large-button">グループを作成</a>
+        </div>
+        <div class="button-container">
+          <a href="entergroup.html" class="large-button">グループに参加</a>
+        </div>
+        <div class="button-container">
+          <a href="mytimetable.html" class="large-button">自分の時間割</a>
+        </div>
+      </main>
+
     <div style="text-align: right;">
         ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
         <a href="javascript:logout()">logout</a>
     </div>
     <hr>
-    <div>
-        <a href="robby.html">robbyへ</a>
-    </div>
+
 </body>
 
 </html>
+
+
+
