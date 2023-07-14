@@ -12,7 +12,8 @@
         osql.requireLogin();
 
         var me;
-        var groupId = osql.getParam('groupId');
+        var groupId = osql.getParam('groupID');
+        console.log(groupId);
 
         $(document).ready(async function () {
             me = await osql.getMe();
@@ -59,17 +60,29 @@
                         // var sqlCircle = `select availability from Participation inner join Plans on Participation.user_id = Plans.user_id where block = '${block}' AND group_id = ${groupId} AND availability = '○'`
                         // var sqlTriangle = `select availability from Participation inner join Plans on Participation.user_id = Plans.user_id where block = '${block}' AND group_id = ${groupId} AND availability = '△'`;
                         // var sqlBad = `select availability from Participation inner join Plans on Participation.user_id = Plans.user_id where block = '${block}' AND group_id = ${groupId} AND availability = '×'`;
-
                         var objects = await osql.connect(sql);
-                        console.log(objects);
 
-                        var availability = '';
+                        var eachAvailability = '';
+
+                        var circle = 0;
+                        var triangle = 0;
+                        var bad = 0;
                         if (objects.length != 0) {
                             for (var k = 0; k < objects.length; k++) {
-                                availability = objects[k];
+                                var objectAvailability = objects[k].availability;
+                                if (objectAvailability == '○') {
+                                    circle += 1;
+                                } else if (objectAvailability == '△') {
+                                    triangle += 1;
+                                } else if (objectAvailability == '×') {
+                                    bad += 1;
+                                }
                             }
+                            eachAvailability += '○...' + circle + '<br>';
+                            eachAvailability += '△...' + triangle + '<br>';
+                            eachAvailability += '×...' + bad;
                         }
-                        html = html + '<td>' + availability + '</td>';
+                        html = html + '<td>' + eachAvailability + '</td>';
                     }
                 }
                 html = html + '</tr>';
