@@ -56,8 +56,12 @@
                     } else {
                         var block = date + String(i);
                         var sql = `select availability from Participation inner join Plans on Participation.user_id = Plans.user_id where block = '${block}' AND group_id = ${groupId}`;
+                        // var sqlCircle = `select availability from Participation inner join Plans on Participation.user_id = Plans.user_id where block = '${block}' AND group_id = ${groupId} AND availability = '○'`
+                        // var sqlTriangle = `select availability from Participation inner join Plans on Participation.user_id = Plans.user_id where block = '${block}' AND group_id = ${groupId} AND availability = '△'`;
+                        // var sqlBad = `select availability from Participation inner join Plans on Participation.user_id = Plans.user_id where block = '${block}' AND group_id = ${groupId} AND availability = '×'`;
+
                         var objects = await osql.connect(sql);
-                        console.log(objects)
+                        console.log(objects);
 
                         var availability = '';
                         if (objects.length != 0) {
