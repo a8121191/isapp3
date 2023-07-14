@@ -55,12 +55,14 @@
                         html = html + '<td>' + i + '</td>';
                     } else {
                         var block = date + String(i);
-                        var sql = `select schedule from Plans where block = '${block}' AND user_id = '${me.id}'`;
-                        var scheduleArray = await osql.connect(sql);
+                        var sql = `select user_id from Participation where block = '${block}' AND group_id = ${groupId}`;
+                        var objects = await osql.connect(sql);
+                        console.log(objects)
+
                         var scheduleEach = '';
-                        if (scheduleArray.length != 0) {
-                            scheduleEach = scheduleArray[0].schedule;
-                        }
+                        /*if (objects.length != 0) {
+                            scheduleEach = objects[0];
+                        }*/
                         html = html + '<td>' + scheduleEach + '</td>';
                     }
                 }
