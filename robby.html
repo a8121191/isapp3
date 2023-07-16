@@ -21,19 +21,51 @@
             document.getElementById('firstname').innerHTML = me.fname;
             document.getElementById('lastname').innerHTML = me.lname;
 
+
+            var urlParams = new URLSearchParams(window.location.search);
+            currentRoomId = urlParams.get('roomId');
+
+            if (currentRoomId) {
+                // グループIDが指定されている場合は入室する
+                var password = prompt("パスワードを入力してください:");
+                if (password) {
+                    // パスワードが入力された場合は入室処理を行う
+                    await enterRoom(currentRoomId, password);
+                } else {
+                    alert("パスワードが必要です。");
+                    window.location.href = "index.html"; // パスワードがない場合はトップページに戻る
+                }
+            }
+
+
             await refreshRooms();
             setInterval(refreshRooms, 2000);
         });
 
+
         async function createRoom() {
             var name = document.getElementById('roomname').value;
-            var sql = `insert into Rooms (name) values('${name}');`;
+            var password = document.getElementById('password').value; // パスワードを取得
+            var sql = `insert into Rooms (name, password) values('${name}', '${password}');`;
             var roomId = await osql.connectInsert(sql);
             console.log(roomId);
 
             refreshRooms();
         }
 
+        async function enterRoom(roomId, password) {
+            var sql = `select * from Rooms where id = '${roomId}' and password = '${password}'`;
+            var rooms = await osql.connect(sql);
+
+            if (rooms.length > 0) {
+                // パスワードが一致した場合は入室処理を行う
+                alert("グループに入室しました！");
+            } else {
+                alert("パスワードが違います。");
+                window.location.href = "index.html"; // パスワードが違う場合はトップページに戻る
+            }
+        }
+        
         async function refreshRooms() {
             var sql = 'select * from Rooms;';
             var objects = await osql.connect(sql);
@@ -74,10 +106,8 @@
             <div>
                 <h2>グループ作成</h2>
                 <input type="text" id="roomname" placeholder="グループ名を入力">
-        <!--<label for="password"></label>
-          <input type="password" id="password" placeholder="パスワードを入力">
-          <br>
-          -->
+                <br>
+                <input type="password" id="password" placeholder="パスワードを入力">
                 <button onclick="createRoom()">作成</button>
                 <br>
             </div>

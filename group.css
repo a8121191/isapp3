@@ -34,3 +34,30 @@ body {
     margin-bottom: 20px;
   }
 
+
+/* グループ作成ボタンを配置するスタイル */
+#roomname, #password, button {
+  margin-bottom: 10px;
+}
+
+/* グループ一覧テーブルのスタイル */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+/* グループ一覧テーブルの見出し行の背景色 */
+th {
+  background-color: #f2f2f2;
+}
+
+/* グループ入室リンクのスタイル */
+a {
+  text-decoration: none;
+  color: blue;
+}
