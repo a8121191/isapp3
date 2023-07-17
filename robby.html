@@ -41,7 +41,7 @@
             refreshRooms();
         }
 
- 
+
         async function refreshRooms() {
             var sql = 'select * from Rooms;';
             var objects = await osql.connect(sql);
@@ -53,7 +53,7 @@
                 var object = objects[i];
                 html = html + `<td>${object.id}</td>`;
                 html = html + `<td>${object.name}</td>`;
-                html = html + `<td><a href="password.html?roomId=${object.id}">入室</a></td>`;
+                html = html + `<td><a href="room.html?roomId=${object.id}">入室</a></td>`;
                 html = html + '</tr>';
             }
             html = html + '</table>';
@@ -77,7 +77,7 @@
     <main>
         <pr>グループを作成するためにグループ名とパスワードを設定してください</pr>
         <br>
-    
+
         <form>
             <div>
                 <h2>グループ作成</h2>
@@ -87,15 +87,15 @@
                 <button onclick="createRoom()">作成</button>
                 <br>
             </div>
-            
+
             <h2>グループ入室</h2>
             <div id="rooms"></div>
 
 
         </form>
-      </main>
+    </main>
 
-      <a href="index.html" class="footer-button">戻る</a>
+    <a href="index.html" class="footer-button">戻る</a>
 </body>
 
 </html>
@@ -106,4 +106,5 @@
 
 
 </body>
+
 </html>
