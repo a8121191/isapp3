@@ -62,7 +62,7 @@
         async function displayPlans() {
             document.getElementById('block2').innerHTML = block;
 
-            var sql = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${0}`;
+            var sql = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${affiliation}`;
             var object = await osql.connect(sql);
 
             if (object.length != 0) {
@@ -78,17 +78,17 @@
             var newSchedule = document.getElementById('schedule').value;
             var newAvailability = document.getElementById('select-availability').value;
 
-            var sql = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${0}`;
+            var sql = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${affiliation}`;
             var object = await osql.connect(sql);
             if (object.length == 0) {
-                var sql = `insert into Plans (block,schedule,availability,affiliation,user_id) values ('${block}','${newSchedule}','${newAvailability}',${0},'${me.id}')`
+                var sql = `insert into Plans (block,schedule,availability,affiliation,user_id) values ('${block}','${newSchedule}','${newAvailability}',${affiliation},'${me.id}')`
                 //予定なしで入れたらどうなる？ →予定はなし（''）で入る
                 await osql.connectInsert(sql);
             } else {
-                var sql = `update Plans set schedule = '${newSchedule}' where user_id = '${me.id}' and block = '${block}' and affiliation = ${0}`;
+                var sql = `update Plans set schedule = '${newSchedule}' where user_id = '${me.id}' and block = '${block}' and affiliation = ${affiliation}`;
                 //予定をなくした（''にした）場合に、どうするか　（そのデータごと消すかそのままか）
                 await osql.connect(sql);
-                var sql = `update Plans set availability = '${newAvailability}' where user_id = '${me.id}' and block = '${block}' and affiliation = ${0}`;
+                var sql = `update Plans set availability = '${newAvailability}' where user_id = '${me.id}' and block = '${block}' and affiliation = ${affiliation}`;
                 await osql.connect(sql);
             }
         }
