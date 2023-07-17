@@ -81,13 +81,6 @@
             }
         }
 
-        // セルがクリックされたときにcellClicked関数を呼び出す
-        $(document).on('click', 'table td', function () {
-            var row = $(this).parent().index() + 1;
-            var column = $(this).index() + 1;
-
-            cellClicked(row, column);
-        });
 
         // セルがクリックされたときにcellClicked関数を呼び出す
         $(document).on('click', 'table td', function () {
