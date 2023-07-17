@@ -59,14 +59,36 @@
 
         async function displayPlans() {
             document.getElementById('block2').innerHTML = block;
+
             var sql = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${0}`;
             var object = await osql.connect(sql);
-            var scheduleHere = object[0].schedule;
-            document.getElementById('schedule').value = scheduleHere;
-            var availabilityHere = object[0].availability;
-            document.getElementById('availability').value = availabilityHere;
 
+            if (object.length != 0) {
+                var scheduleHere = object[0].schedule;
+                document.getElementById('schedule').value = scheduleHere;
 
+                var availabilityHere = object[0].availability;
+                document.getElementById('availability').value = availabilityHere;
+            }
+        }
+
+        async function writePlans() {
+            var newSchedule = document.getElementById('schedule').value;
+            var newAvailability = document.getElementById('select-availability').value;
+
+            var sql = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${0}`;
+            var object = await osql.connect(sql);
+            if (object.length == 0) {
+                var sql = `insert into Plans (block,schedule,availability,affiliation,user_id) values ('${block}','${newSchedule}','${newAvailability}',${0},'${me.id}')`
+                //予定なしで入れたらどうなる？ →予定はなし（''）で入る
+                await osql.connectInsert(sql);
+            } else {
+                var sql = `update Plans set schedule = '${newSchedule}' where user_id = '${me.id}' and block = '${block}' and affiliation = ${0}`;
+                //予定をなくした（''にした）場合に、どうするか　（そのデータごと消すかそのままか）
+                await osql.connect(sql);
+                var sql = `update Plans set availability = '${newAvailability}' where user_id = '${me.id}' and block = '${block}' and affiliation = ${0}`;
+                await osql.connect(sql);
+            }
         }
 
 
@@ -94,13 +116,16 @@
         <input id="schedule" value="" type="textfield">
         <br>
         予定の変更可能具合
-        現在：<input id="availability" value="" type="textfield">
-
+        <br>
+        現在：<input id="availability" value="" type="textfield" disabled>
+        <br>
         変更：<select id="select-availability">
             <option value='○'>○</option>
             <option value='△'>△</option>
             <option value='×'>×</option>
         </select>
+        <br>
+        <button onclick="writePlans()">入力/変更</button>
     </div>
 </body>
 
