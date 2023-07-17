@@ -30,11 +30,15 @@
 
         osql.requireLogin();
 
+        var me;
+
         var row = osql.getParam('row');
         var column = osql.getParam('column');
         var block = ''
 
         $(document).ready(async function () {
+            me = await osql.getMe();
+
             var date = ''
             if (column == 2) {
                 date = '月';
@@ -49,9 +53,19 @@
             }
             block = date + String(row - 1);
             document.getElementById('block').innerHTML = block;
+
+            await displayPlans();
         });
 
-        async function insertPlans() {
+        async function displayPlans() {
+            document.getElementById('block2').innerHTML = block;
+            var sql = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${0}`;
+            var object = await osql.connect(sql);
+            var scheduleHere = object[0].schedule;
+            document.getElementById('schedule').value = scheduleHere;
+            var availabilityHere = object[0].availability;
+            document.getElementById('availability').value = availabilityHere;
+
 
         }
 
@@ -69,11 +83,25 @@
             <a href="index.html">top</a>
         </div>
         <h1 id="header">あなたの<span id="block"></span>の編集ページ</h1>
-
     </header>
 
 
     <a href="myTimetable.html" class="footer-button">戻る</a>
+
+    <div>
+        あなたの<span id="block2"></span>の予定
+        <br>
+        <input id="schedule" value="" type="textfield">
+        <br>
+        予定の変更可能具合
+        現在：<input id="availability" value="" type="textfield">
+
+        変更：<select id="select-availability">
+            <option value='○'>○</option>
+            <option value='△'>△</option>
+            <option value='×'>×</option>
+        </select>
+    </div>
 </body>
 
 </html>
