@@ -105,7 +105,7 @@
 
         function cellClicked(row, column) {
             if (row >= 2 && row <= 6 && column >= 2 && column <= 6) {
-                var url = 'cell.html?row=' + row + '&column=' + column;
+                var url = `cell.html?row=${row}&column=${column}&affiliation=${groupId}`;
 
                 // cell.htmlに遷移
                 window.location.href = url;
