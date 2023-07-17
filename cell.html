@@ -10,23 +10,53 @@
     <script type="text/javascript" src="lib/osql.js"></script>
 
     <script>
-        // URLパラメータを取得する関数
-        function getParameterByName(name, url = window.location.href) {
-            name = name.replace(/[[\]]/g, '\\$&');
-            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        // // URLパラメータを取得する関数
+        // async function getParameterByName(name, url = window.location.href) {
+        //     name = name.replace(/[[\]]/g, '\\$&');
+        //     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        //         results = regex.exec(url);
+        //     if (!results) return null;
+        //     if (!results[2]) return '';
+        //     return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        // }
+
+        // // 座標情報を取得
+        // var row = getParameterByName('row');
+        // var column = getParameterByName('column');
+
+        // // 座標情報を表示
+        // var header = document.getElementById('header');
+        // header.innerHTML = 'クリックした座標：' + row + '行' + column + '列';
+
+        osql.requireLogin();
+
+        var row = osql.getParam('row');
+        var column = osql.getParam('column');
+        var block = ''
+
+        $(document).ready(async function () {
+            var date = ''
+            if (column == 2) {
+                date = '月';
+            } else if (column == 3) {
+                date = '火';
+            } else if (column == 4) {
+                date = '水';
+            } else if (column == 5) {
+                date = '木';
+            } else if (column == 6) {
+                date = '金';
+            }
+            block = date + String(row - 1);
+            document.getElementById('block').innerHTML = block;
+        });
+
+        async function insertPlans() {
+
         }
 
-        // 座標情報を取得
-        var row = getParameterByName('row');
-        var column = getParameterByName('column');
 
-        // 座標情報を表示
-        var header = document.getElementById('header');
-        header.innerHTML = 'クリックした座標：' + row + '行' + column + '列';
+
 
     </script>
 
@@ -38,7 +68,7 @@
             ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
             <a href="index.html">top</a>
         </div>
-        <h1 id = "header">の編集ページ</h1>
+        <h1 id="header">あなたの<span id="block"></span>の編集ページ</h1>
 
     </header>
 
