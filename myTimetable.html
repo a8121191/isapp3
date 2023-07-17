@@ -81,32 +81,32 @@
             }
         }
 
-         // セルがクリックされたときにcellClicked関数を呼び出す
-         $(document).on('click', 'table td', function () {
+        // セルがクリックされたときにcellClicked関数を呼び出す
+        $(document).on('click', 'table td', function () {
             var row = $(this).parent().index() + 1;
             var column = $(this).index() + 1;
 
             cellClicked(row, column);
         });
-        
+
         // セルがクリックされたときにcellClicked関数を呼び出す
-$(document).on('click', 'table td', function () {
-    var row = $(this).parent().index() + 1;
-    var column = $(this).index() + 1;
+        $(document).on('click', 'table td', function () {
+            var row = $(this).parent().index() + 1;
+            var column = $(this).index() + 1;
 
-    cellClicked(row, column);
-});
+            cellClicked(row, column);
+        });
 
-// ... 省略 ...
+        // ... 省略 ...
 
-function cellClicked(row, column) {
-    if (row >= 2 && row <= 6 && column >= 2 && column <= 6) {
-        var url = 'cell.html?row=' + row + '&column=' + column;
+        function cellClicked(row, column) {
+            if (row >= 2 && row <= 6 && column >= 2 && column <= 6) {
+                var url = 'cell.html?row=' + row + '&column=' + column;
 
-        // cell.htmlに遷移
-        window.location.href = url;
-    }
-}
+                // cell.htmlに遷移
+                window.location.href = url;
+            }
+        }
     </script>
 
 </head>
@@ -123,7 +123,7 @@ function cellClicked(row, column) {
     </header>
 
     <p id='result'>xxxx</p>
-    
+
     <div>
         <a href="robby.html">グループ参加・作成ページへ</a>
     </div>
