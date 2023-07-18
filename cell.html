@@ -99,7 +99,11 @@
             history.back();;
         }
 
-        
+        async function deleteSchedule() {
+            var sql = `delete from Plans where user_id = '${me.id}' and block = '${block}' and (affiliation = ${affiliation} or affiliation = ${0})`;
+            await osql.connect(sql);
+        }
+
         function goBack() {
             history.back();
         }
@@ -137,6 +141,8 @@
         </select>
         <br>
         <button onclick="writePlans()">入力/変更</button>
+        <br>
+        <button onclick="deleteSchedule()">予定の削除</button>
     </div>
     <button onclick="goBack()">戻る</button>
 </body>
