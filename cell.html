@@ -91,6 +91,7 @@
                 var sql = `update Plans set availability = '${newAvailability}' where user_id = '${me.id}' and block = '${block}' and affiliation = ${affiliation}`;
                 await osql.connect(sql);
             }
+            window.location.href = "myTimetable.html";
         }
 
 
@@ -110,7 +111,7 @@
     </header>
 
 
-    <a href="myTimetable.html" class="footer-button">戻る</a>
+
 
     <div>
         あなたの<span id="block2"></span>の予定
@@ -129,6 +130,7 @@
         <br>
         <button onclick="writePlans()">入力/変更</button>
     </div>
+    <a href="myTimetable.html" class="footer-button">戻る</a>
 </body>
 
 </html>
