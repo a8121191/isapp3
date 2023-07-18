@@ -34,8 +34,7 @@
 
         var row = osql.getParam('row');
         var column = osql.getParam('column');
-        var affiliation = osql.getParam('affiliation');
-        console.log(affiliation);
+        var groupId = osql.getParam('groupId');
         var block = '';
 
         $(document).ready(async function () {
@@ -60,7 +59,7 @@
         });
 
         async function schedule() {
-            var sql = `select * from (Participation inner join Plans on Participation.user_id = Plans.user_id) inner join Users on Plans.user_id = Users.id where group_id= ${affiliation} and block = '${block}'`;
+            var sql = `select * from (Participation inner join Plans on Participation.user_id = Plans.user_id) inner join Users on Plans.user_id = Users.id where group_id= ${groupId} and block = '${block}'`;
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
@@ -78,7 +77,9 @@
             document.getElementById('schedule').innerHTML = html;
         }
 
-
+        async function toGroupSchedule() {
+            location.href = `cell.html?row=${row}&column=${column}&affiliation=${groupId}`;
+        }
 
     </script>
 
@@ -94,6 +95,7 @@
     </header>
 
     <div id="schedule"></div>
+    <button onclick="toGroupSchedule()">自分の予定を変更</button>
 </body>
 
 </html>
