@@ -65,6 +65,11 @@
             var sql = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${affiliation}`;
             var object = await osql.connect(sql);
 
+            if (affiliation != 0 || object.length == 0) {
+                sql = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${0}`;
+                object = await osql.connect(sql);
+            }
+
             if (object.length != 0) {
                 var scheduleHere = object[0].schedule;
                 document.getElementById('schedule').value = scheduleHere;
