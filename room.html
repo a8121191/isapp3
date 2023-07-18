@@ -24,6 +24,7 @@
             var objects = await osql.connect(sql);
             var room = objects[0];
             document.getElementById('roomname').innerHTML = room.name;
+
         });
 
 
@@ -32,16 +33,19 @@
             await enterRoom(roomId, password);
         }
 
-
-
         async function enterRoom(roomId, password) {
             var sql = `select * from Rooms where id = ${roomId} and password = '${password}'`;
             var rooms = await osql.connect(sql);
 
             if (rooms.length > 0) {
                 // パスワードが正しい場合、グループに入室を許可する
-                var sql = `insert into Participation (group_id,user_id) values('${roomId}','${me.id}')`;
-                await osql.connectInsert(sql);
+                sql = `select * from Participation where group_id = ${roomId} and user_id = '${me.id}'`;
+                var object = await osql.connect(sql);
+
+                if (object.length == 0) {
+                    sql = `insert into Participation (group_id,user_id) values(${roomId},'${me.id}')`;
+                    await osql.connectInsert(sql);
+                }
 
                 // group.htmlにリダイレクトする
                 window.location.href = `groupTimetable.html?groupId=${roomId}`;
