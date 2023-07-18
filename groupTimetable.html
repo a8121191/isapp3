@@ -3,8 +3,8 @@
 <html>
 
 <head>
+    <link rel="stylesheet" type="text/css" href="group.css">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
     <script type="text/javascript" src="lib/jquery.min.js"></script>
     <script type="text/javascript" src="lib/osql.js"></script>
 
@@ -101,7 +101,6 @@
             cellClicked(row, column);
         });
 
-        // ... 省略 ...
 
         function cellClicked(row, column) {
             if (row >= 2 && row <= 6 && column >= 2 && column <= 6) {
@@ -117,16 +116,21 @@
 </head>
 
 <body>
-    <h1>時間割共有システム</h1>
-    <div style="text-align: right;">
-        ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
-        <a href="javascript:logout()">logout</a>
-    </div>
+    <header>
+        <div style="text-align: right;">
+            ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
+            <a href="index.html">top</a>   
+        </div>
+        <h1>時間割共有システム</h1>
+    </header>
+ 
     <hr>
+
+    <p id='result'>xxxx</p>
+    
     <div>
         <a href="robby.html">robbyへ</a>
     </div>
-    <p id='result'>xxxx</p>
 </body>
 
 </html>
