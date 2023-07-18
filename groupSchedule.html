@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="login.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/osql.js"></script>
+
+    <script>
+        // // URLパラメータを取得する関数
+        // async function getParameterByName(name, url = window.location.href) {
+        //     name = name.replace(/[[\]]/g, '\\$&');
+        //     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        //         results = regex.exec(url);
+        //     if (!results) return null;
+        //     if (!results[2]) return '';
+        //     return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        // }
+
+        // // 座標情報を取得
+        // var row = getParameterByName('row');
+        // var column = getParameterByName('column');
+
+        // // 座標情報を表示
+        // var header = document.getElementById('header');
+        // header.innerHTML = 'クリックした座標：' + row + '行' + column + '列';
+
+        osql.requireLogin();
+
+        var me;
+
+        var row = osql.getParam('row');
+        var column = osql.getParam('column');
+        var affiliation = osql.getParam('affiliation');
+        console.log(affiliation);
+        var block = '';
+
+        $(document).ready(async function () {
+            me = await osql.getMe();
+
+            var date = ''
+            if (column == 2) {
+                date = '月';
+            } else if (column == 3) {
+                date = '火';
+            } else if (column == 4) {
+                date = '水';
+            } else if (column == 5) {
+                date = '木';
+            } else if (column == 6) {
+                date = '金';
+            }
+            block = date + String(row - 1);
+            document.getElementById('block').innerHTML = block;
+
+            await schedule();
+        });
+
+        async function schedule() {
+            var sql = `select * from (Participation inner join Plans on Participation.user_id = Plans.user_id) inner join Users on Plans.user_id = Users.id where group_id= ${affiliation} and block = '${block}'`;
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '';
+            html = html + '<table border="1">';
+            for (var i = 0; i < objects.length; i++) {
+                html = html + '<tr>';
+                var object = objects[i];
+                html = html + `<td>${object.fname}</td>`;
+                html = html + `<td>${object.lname}</td>`;
+                html = html + `<td>${object.schedule}</td>`;
+                html = html + `<td>${object.availability}</td>`;
+                html = html + '</tr>';
+            }
+            html = html + '</table>';
+            document.getElementById('schedule').innerHTML = html;
+        }
+
+
+
+    </script>
+
+</head>
+
+<body>
+    <header>
+        <div style="text-align: right;">
+            ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
+            <a href="index.html">top</a>
+        </div>
+        <h1 id="header"><span id="block"></span>のページ</h1>
+    </header>
+
+    <div id="schedule"></div>
+</body>
+
+</html>
