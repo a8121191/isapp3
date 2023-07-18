@@ -40,7 +40,8 @@
 
             if (rooms.length > 0) {
                 // パスワードが正しい場合、グループに入室を許可する
-
+                var sql = `insert into Participation (group_id,user_id) values('${roomId}','${me.id}')`;
+                await osql.connectInsert(sql);
 
                 // group.htmlにリダイレクトする
                 window.location.href = `groupTimetable.html?groupId=${roomId}`;
