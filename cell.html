@@ -91,10 +91,13 @@
                 var sql = `update Plans set availability = '${newAvailability}' where user_id = '${me.id}' and block = '${block}' and affiliation = ${affiliation}`;
                 await osql.connect(sql);
             }
-            window.location.href = "myTimetable.html";
+            history.back();;
         }
 
-
+        
+        function goBack() {
+            history.back();
+        }
 
 
     </script>
@@ -130,7 +133,7 @@
         <br>
         <button onclick="writePlans()">入力/変更</button>
     </div>
-    <a href="myTimetable.html" class="footer-button">戻る</a>
+    <button onclick="goBack()">戻る</button>
 </body>
 
 </html>
