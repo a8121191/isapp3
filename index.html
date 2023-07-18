@@ -28,6 +28,10 @@
     function logout() {
       osql.logout();
     }
+
+    async function insertNickname() {
+      var sql = `insert into Nicknames ()`;
+    }
   </script>
 
 </head>
@@ -40,6 +44,10 @@
     </div>
     <h1>ようこそ！時間割共有システムへ！</h1>
   </header>
+
+  ニックネームの入力：<input type="text" id="nickname" placeholder="ニックネームを入力してください">
+  <button onclick="insertNickname()">登録</button>
+
   <main>
     <div class="button-container">
       <a href="robby.html" class="large-button">グループに参加＆作成</a>

@@ -24,6 +24,9 @@
             var objects = await osql.connect(sql);
             var room = objects[0];
             document.getElementById('roomname').innerHTML = room.name;
+
+            await displayMembers();
+            setInterval(displayMembers, 2000);
         });
 
 
@@ -32,15 +35,19 @@
             await enterRoom(roomId, password);
         }
 
-
-
         async function enterRoom(roomId, password) {
             var sql = `select * from Rooms where id = ${roomId} and password = '${password}'`;
             var rooms = await osql.connect(sql);
 
             if (rooms.length > 0) {
                 // パスワードが正しい場合、グループに入室を許可する
+                sql = `select * from Participation where group_id = ${roomId} and user_id = '${me.id}'`;
+                var object = await osql.connect(sql);
 
+                if (object.length == 0) {
+                    sql = `insert into Participation (group_id,user_id) values(${roomId},'${me.id}')`;
+                    await osql.connectInsert(sql);
+                }
 
                 // group.htmlにリダイレクトする
                 window.location.href = `groupTimetable.html?groupId=${roomId}`;
@@ -48,7 +55,22 @@
                 // パスワードが違う場合、アラートを表示する
                 alert("パスワードが違います。");
             }
+        }
 
+        async function displayMembers() {
+            var sql = `select * from Participation inner join Users on Participation.user_id = Users.id where group_id = ${roomId}`;
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '';
+            html = html + '<table border="1">';
+            for (var i = 0; i < objects.length; i++) {
+                html = html + '<tr>';
+                var object = objects[i];
+                html = html + `<td>${object.fname}</td>`;
+                html = html + '</tr>';
+            }
+            html = html + '</table>';
+            document.getElementById('members').innerHTML = html;
         }
 
 
@@ -70,6 +92,8 @@
         <input id="passwordInput" type="password" placeholder="パスワードを入力">
         <button onclick="enterRoomWithPassword()">入室</button>
     </div>
+
+    <div id="members"></div>
 
 
     <a href="robby.html" class="footer-button">戻る</a>

@@ -104,7 +104,7 @@
 
         function cellClicked(row, column) {
             if (row >= 2 && row <= 6 && column >= 2 && column <= 6) {
-                var url = `cell.html?row=${row}&column=${column}&affiliation=${groupId}`;
+                var url = `groupSchedule.html?row=${row}&column=${column}&groupId=${groupId}`;
 
                 // cell.htmlに遷移
                 window.location.href = url;
@@ -124,17 +124,17 @@
     <header>
         <div style="text-align: right;">
             ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
-            <a href="index.html">top</a>   
+            <a href="index.html">top</a>
         </div>
         <h1>時間割共有システム<br>チーム： <span id="roomname"></span></h1></h1>
     </header>
- 
+
     <hr>
 
     <button onclick="reloadPage()">更新</button>
 
     <p id='result'>xxxx</p>
-    
+
     <div>
         <a href="robby.html">robbyへ</a>
     </div>
