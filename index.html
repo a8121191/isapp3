@@ -15,11 +15,13 @@
   <script>
     osql.requireLogin();
 
+    //Usersのidを入れる変数
     var meId = '';
 
     $(document).ready(async function () {
       var me = await osql.getMe();
       console.log(me);
+      //初回ログイン時のnicknameは'未登録'に
       var sql = `insert ignore into Users values('${me.id}', '${me.fname}', '${me.lname}', '未登録');`;
       await osql.connect(sql);
 
@@ -33,14 +35,23 @@
       osql.logout();
     }
 
-    async function judgeNickname() {
-      var sql = `select nickname from Users where id = ${me.id}`
-      var nickname = await osql.connect(sql);
-      if (nickname == '未登録') {
+    //ニックネームが'未登録'でなければ、次のページへ移動できるようにする関数
+    //「グループに参加＆作成」と「自分の時間割」ボタンを押すと実行される
+    async function judgeNickname(toURL) {
+      var sql = `select nickname from Users where id = '${meId}';`;
+      var arr = await osql.connect(sql);
+      if (arr[0].nickname == '未登録') {
         alert("ニックネームを登録してください");
       } else {
-        location.href = 'robby.html';
+        location.href = toURL;
       }
+    }
+
+    //ニックネームを登録する関数
+    async function registerNickname() {
+      var newNickname = document.getElementById('registerNickname').value;
+      var sql = `update Users set nickname = '${newNickname}' where id = '${meId}';`;
+      await osql.connect(sql);
     }
 
   </script>
@@ -56,16 +67,16 @@
     <h1>ようこそ！時間割共有システムへ！</h1>
   </header>
 
-  <span id="nicknameJudge"></span>
-  ニックネームの入力：<input type="text" id="nickname" placeholder="ニックネームを入力してください">
-  <button onclick="insertNickname()">登録</button>
+  <br>
+  ニックネームの入力/変更：<input type="text" id="registerNickname">
+  <button onclick="registerNickname()">登録</button>
 
   <main>
     <div class="button-container">
       <!--
         <a href="robby.html" class="large-button" onclick="judgeNickname()">グループに参加＆作成</a>
       -->
-      <button class="large-button" onclick="judgeNickname()">グループに参加＆作成</button>
+      <button class="large-button" onclick="judgeNickname('robby.html')">グループに参加＆作成</button>
     </div>
     <!--
         <div class="button-container">
@@ -73,7 +84,10 @@
         </div>
         -->
     <div class="button-container">
-      <a href="myTimetable.html" class="large-button" onclick="judgeNickname()">自分の時間割</a>
+      <!--
+        <a href="myTimetable.html" class="large-button" onclick="judgeNickname()">自分の時間割</a>
+      -->
+      <button class="large-button" onclick="judgeNickname('myTimeTable.html')">自分の時間割</button>
     </div>
   </main>
 
