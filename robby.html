@@ -39,7 +39,6 @@
             refreshRooms();
         }
 
-
         async function refreshRooms() {
             var sql = 'select * from Rooms;';
             var objects = await osql.connect(sql);
