@@ -23,6 +23,7 @@
       console.log(me);
       //初回ログイン時のnicknameは'未登録'に
       var sql = `insert ignore into Users values('${me.id}', '${me.fname}', '${me.lname}', '未登録');`;
+      //var sql = `insert ignore into Users values('${me.id}','未登録');`;
       await osql.connect(sql);
 
       //document.getElementById('firstname').innerHTML = me.fname;
