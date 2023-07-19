@@ -21,10 +21,8 @@
             document.getElementById('firstname').innerHTML = me.fname;
             document.getElementById('lastname').innerHTML = me.lname;
 
-
             //var urlParams = new URLSearchParams(window.location.search);
             //currentRoomId = urlParams.get('roomId');
-
 
             await refreshRooms();
             setInterval(refreshRooms, 2000);
@@ -45,7 +43,7 @@
         async function refreshRooms() {
             var sql = 'select * from Rooms;';
             var objects = await osql.connect(sql);
-            console.log(objects);
+            //console.log(objects);
             var html = '';
             html = html + '<table border="1">';
             for (var i = 0; i < objects.length; i++) {
@@ -75,12 +73,13 @@
 
     </header>
     <main>
-        <pr>グループを作成するためにグループ名とパスワードを設定してください</pr>
-        <br>
-
         <form>
             <div>
                 <h2>グループ作成</h2>
+                <br>
+                <pr>グループを作成するためにグループ名とパスワードを設定してください</pr>
+                <br>
+                <br>
                 <input type="text" id="roomname" placeholder="グループ名を入力">
                 <br>
                 <input type="password" id="password" placeholder="パスワードを入力">
