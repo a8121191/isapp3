@@ -33,7 +33,7 @@
 
         async function groupTimetable() {
             var html = "";
-            html = html + '<table border = "1">';
+            html = html + '<table border = "1" class = "timetable">';
 
             for (var i = 0; i <= 5; i++) {
                 html = html + '<tr>';
@@ -60,47 +60,18 @@
                         html = html + '<td>' + i + '</td>';
                     } else {
                         var block = date + String(i);
-                        var sql = `select * from Participation inner join Plans on Participation.user_id = Plans.user_id where block = '${block}' AND group_id = ${groupId}`;
+                        var sql = `select availability from Participation inner join Plans on Participation.user_id = Plans.user_id where block = '${block}' AND group_id = ${groupId}`;
                         // var sqlCircle = `select availability from Participation inner join Plans on Participation.user_id = Plans.user_id where block = '${block}' AND group_id = ${groupId} AND availability = '○'`
                         // var sqlTriangle = `select availability from Participation inner join Plans on Participation.user_id = Plans.user_id where block = '${block}' AND group_id = ${groupId} AND availability = '△'`;
                         // var sqlBad = `select availability from Participation inner join Plans on Participation.user_id = Plans.user_id where block = '${block}' AND group_id = ${groupId} AND availability = '×'`;
                         var objects = await osql.connect(sql);
-
 
                         var eachAvailability = '';
 
                         var circle = 0;
                         var triangle = 0;
                         var bad = 0;
-
-
                         if (objects.length != 0) {
-
-                            // var check = false;
-                            // while (check == false) {
-                            //     var state = true;
-                            //     for (var l = 0; l < objects.length; l++) {
-                            //         var each = objects[l].user_id;
-                            //         for (var m = 0; m < objects.length; m++) {
-                            //             if (l == m) {
-                            //                 continue;
-                            //             }
-                            //             var each2 = objects[m].user_id;
-                            //             if (each == each2) {
-                            //                 objects.splice(m, 1);
-                            //                 state = false;
-                            //                 break;
-                            //             }
-                            //         }
-                            //         if (state == false) {
-                            //             break;
-                            //         }
-                            //         else if (state == true && l == objects.length) {
-                            //             check = true;
-                            //         }
-                            //     }
-                            // }
-
                             for (var k = 0; k < objects.length; k++) {
                                 var objectAvailability = objects[k].availability;
                                 if (objectAvailability == '○') {
@@ -156,7 +127,7 @@
 <body>
     <header>
         <div style="text-align: right;">
-            ようこそ<span id="lastname"></span> <span id="nickname"></span>さん
+            ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
             <a href="index.html">top</a>
         </div>
         <h1>時間割共有ページ<br>チーム： <span id="roomname"></span></h1>
