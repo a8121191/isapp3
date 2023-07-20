@@ -40,6 +40,10 @@
         $(document).ready(async function () {
             me = await osql.getMe();
 
+            var sql = `select name from Rooms where id = ${groupId};`;
+            var object = await osql.connect(sql);
+            document.getElementById('groupName').innerHTML = object[0].name;
+
             var date = ''
             if (column == 2) {
                 date = '月';
@@ -55,10 +59,10 @@
             block = date + String(row - 1);
             document.getElementById('block').innerHTML = block;
 
-            await schedule();
+            await displaySchedule();
         });
 
-        async function schedule() {
+        async function displaySchedule() {
             var sql = `select * from (Participation inner join Plans on Participation.user_id = Plans.user_id) inner join Users on Plans.user_id = Users.id where group_id= ${groupId} and block = '${block}'`;
             var objects = await osql.connect(sql);
             console.log(objects);
@@ -67,8 +71,7 @@
             for (var i = 0; i < objects.length; i++) {
                 html = html + '<tr>';
                 var object = objects[i];
-                html = html + `<td>${object.fname}</td>`;
-                html = html + `<td>${object.lname}</td>`;
+                html = html + `<td>${object.nickname}</td>`;
                 html = html + `<td>${object.schedule}</td>`;
                 html = html + `<td>${object.availability}</td>`;
                 html = html + '</tr>';
@@ -91,7 +94,7 @@
             ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
             <a href="index.html">top</a>
         </div>
-        <h1 id="header"><span id="block"></span>のページ</h1>
+        <h1 id="header"><span id="groupName"></span>の<span id="block"></span>のページ</h1>
     </header>
 
     <div id="schedule"></div>

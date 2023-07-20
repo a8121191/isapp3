@@ -100,8 +100,11 @@
         }
 
         async function deleteSchedule() {
-            var sql = `delete from Plans where user_id = '${me.id}' and block = '${block}' and (affiliation = ${affiliation} or affiliation = ${0})`;
-            await osql.connect(sql);
+            var ans = window.confirm('本当にいいんですね？');
+            if (ans == true) {
+                var sql = `delete from Plans where user_id = '${me.id}' and block = '${block}' and (affiliation = ${affiliation} or affiliation = ${0})`;
+                await osql.connect(sql);
+            }
         }
 
         function goBack() {
