@@ -56,6 +56,9 @@
             }
             block = date + String(row - 1);
             document.getElementById('block').innerHTML = block;
+            document.getElementById('firstname').innerHTML = me.fname;
+            document.getElementById('lastname').innerHTML = me.lname;
+            
 
             await displayPlans();
         });

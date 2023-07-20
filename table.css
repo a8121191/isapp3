@@ -61,3 +61,24 @@ a {
   text-decoration: none;
   color: blue;
 }
+
+/* テーブルのスタイル */
+.timetable {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 20px auto;
+}
+
+/* 1行目と1列目のスタイル */
+.timetable th {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+    padding: 8px;
+    text-align: center;
+}
+
+/* 1行1列目（1,1）のスタイル */
+.timetable th:first-child {
+    background-color: #f00; 
+}
