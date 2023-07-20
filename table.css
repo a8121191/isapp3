@@ -43,7 +43,7 @@ body {
 /* グループ一覧テーブルのスタイル */
 table {
   border-collapse: collapse;
-  width: 50%;
+  width: 80%;
 }
 
 table, th, td {
