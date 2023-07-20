@@ -76,6 +76,15 @@
 
                 var availabilityHere = object[0].availability;
                 document.getElementById('availability').value = availabilityHere;
+
+                var affiliationHere = object[0].affiliation;
+                var affiliationSentence = '';
+                if (affiliationHere == 0) {
+                    affiliationSentence = '自分の時間割ページで登録した予定です.どのグループでも閲覧可能な予定です';
+                } else {
+                    affiliationSentence = 'このグループ画面でのみ閲覧可能な予定です'
+                }
+                document.getElementById('affiliation').innerHTML = affiliationSentence;
             }
         }
 
@@ -125,9 +134,6 @@
         <h1 id="header">あなたの<span id="block"></span>の編集ページ</h1>
     </header>
 
-
-
-
     <div>
         あなたの<span id="block2"></span>の予定
         <br>
@@ -142,6 +148,9 @@
             <option value='△'>△</option>
             <option value='×'>×</option>
         </select>
+        <br>
+        予定の種類：
+        <span id="affiliation"></span>
         <br>
         <button onclick="writePlans()">入力/変更</button>
         <br>
