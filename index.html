@@ -26,8 +26,8 @@
       //var sql = `insert ignore into Users values('${me.id}','未登録');`;
       await osql.connect(sql);
 
-      //document.getElementById('firstname').innerHTML = me.fname;
-      //document.getElementById('lastname').innerHTML = me.lname;
+      document.getElementById('firstname').innerHTML = me.fname;
+      document.getElementById('lastname').innerHTML = me.lname;
 
       meId = me.id;
     });
@@ -63,14 +63,16 @@
 <body>
   <header>
     <div style="text-align: right;">
-      <!--ようこそ<span id="lastname"></span> <span id="firstname"></span>さん-->
+      ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
       <a href="javascript:logout()">logout</a>
     </div>
     <h1>ようこそ！時間割共有システムへ！</h1>
   </header>
 
   <br>
-  ニックネームの入力/変更：<input type="text" id="registerNickname">
+  ニックネームの入力/変更：
+  <br>
+  <input type="text" id="registerNickname">
   <button onclick="registerNickname()">登録</button>
 
   <main>
