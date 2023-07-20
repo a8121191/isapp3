@@ -58,7 +58,7 @@
             document.getElementById('block').innerHTML = block;
             document.getElementById('firstname').innerHTML = me.fname;
             document.getElementById('lastname').innerHTML = me.lname;
-            
+
 
             await displayPlans();
         });
@@ -72,15 +72,18 @@
             //グループの時間割からきた→グループの時間割を表示
             var sql = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${affiliation}`;
             var object = await osql.connect(sql);
-            displayAff = affiliation;
-
-
-            //グループの時間割からきて、そのコマのグループで登録した時間割がない場合
-            //自分の時間割があれば表示する
-            if (affiliation != 0 && object.length == 0) {
+            if (object.length != 0) {
+                displayAff = affiliation;
+            } else if (affiliation != 0) {
+                //グループの時間割からきて、そのコマのグループで登録した時間割がない場合
+                //自分の時間割があれば表示する
                 var sql2 = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${0}`;
                 object = await osql.connect(sql2);
-                displayAff = 0;
+                if (object.length != 0) {
+                    displayAff = 0;
+                }
+            } else {
+                displayAff = 1000;
             }
 
             if (object.length != 0) {
@@ -101,6 +104,12 @@
                     affiliationSentence = 'このグループ画面でのみ閲覧可能な予定です'
                 }
                 document.getElementById('affiliation').innerHTML = affiliationSentence;
+            }
+
+            var sql3 = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${0}`;
+            var objects3 = await osql.connect(sql2);
+            if (displayAff != 0) {
+                document.getElementById('caution').innerHTML = 'ここでの入力/変更は、このグループにのみ反映されます'
             }
         }
 
@@ -180,6 +189,7 @@
         <span id="affiliation"></span>
         <br>
         <button onclick="writePlans()">入力/変更</button>
+        <span id="caution"></span>
         <br>
         <button onclick="deleteSchedule()">予定の削除</button>
     </div>
