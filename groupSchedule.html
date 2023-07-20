@@ -58,7 +58,9 @@
             }
             block = date + String(row - 1);
             document.getElementById('block').innerHTML = block;
-
+            document.getElementById('firstname').innerHTML = me.fname;
+            document.getElementById('lastname').innerHTML = me.lname;
+            
             await displaySchedule();
         });
 
@@ -96,9 +98,16 @@
         </div>
         <h1 id="header"><span id="groupName"></span>の<span id="block"></span>のページ</h1>
     </header>
-
+    <br>
+    個人の予定とその優先度が表示されています
+    <br>
     <div id="schedule"></div>
+    <br>
     <button onclick="toGroupSchedule()">自分の予定を変更</button>
+
+    <footer>
+        <a href="groupTimetable.html" class="footer-button">戻る</a>
+    </footer>
 </body>
 
 </html>
