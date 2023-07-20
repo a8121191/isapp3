@@ -18,14 +18,20 @@
 
         $(document).ready(async function () {
             me = await osql.getMe();
-            document.getElementById('firstname').innerHTML = me.fname;
-            document.getElementById('lastname').innerHTML = me.lname;
+            //document.getElementById('firstname').innerHTML = me.fname;
+            //document.getElementById('lastname').innerHTML = me.lname;
 
             //var urlParams = new URLSearchParams(window.location.search);
             //currentRoomId = urlParams.get('roomId');
 
             await refreshRooms();
             setInterval(refreshRooms, 2000);
+
+            var sql = `select nickname from Users where id = '${me.id}'`
+            var object = await osql.connect(sql);
+            var myNickname = object[0].nickname;
+            console.log(myNickname);
+            document.getElementById('my-nickname').innerHTML = myNickname;
         });
 
 
@@ -66,7 +72,10 @@
     <header>
 
         <div style="text-align: right;">
-            ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
+            <!--
+                ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
+            -->
+            ようこそ<span id="my-nickname"></span>さん
             <a href="index.html">top</a>
         </div>
         <h1 class="title">グループ作成/参加</h1>
