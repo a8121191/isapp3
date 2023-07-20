@@ -24,14 +24,13 @@
             //var urlParams = new URLSearchParams(window.location.search);
             //currentRoomId = urlParams.get('roomId');
 
-            await refreshRooms();
-            setInterval(refreshRooms, 2000);
-
             var sql = `select nickname from Users where id = '${me.id}'`
             var object = await osql.connect(sql);
             var myNickname = object[0].nickname;
-            console.log(myNickname);
             document.getElementById('my-nickname').innerHTML = myNickname;
+
+            await refreshRooms();
+            setInterval(refreshRooms, 2000);
         });
 
 
@@ -88,10 +87,12 @@
                 <br>
                 <pr>グループを作成するためにグループ名とパスワードを設定してください</pr>
                 <br>
+                <pr>公開されるので真面目なパスワードは入れないでください</pr>
+                <br>
                 <br>
                 <input type="text" id="roomname" placeholder="グループ名を入力">
                 <br>
-                <input type="password" id="password" placeholder="パスワードを入力">公開されるので真面目なパスワードは入れないでください
+                <input type="password" id="password" placeholder="パスワードを入力">
                 <button onclick="createRoom()">作成</button>
                 <br>
             </div>

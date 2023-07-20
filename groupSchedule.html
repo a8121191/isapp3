@@ -58,9 +58,14 @@
             }
             block = date + String(row - 1);
             document.getElementById('block').innerHTML = block;
-            document.getElementById('firstname').innerHTML = me.fname;
-            document.getElementById('lastname').innerHTML = me.lname;
-            
+            //document.getElementById('firstname').innerHTML = me.fname;
+            //document.getElementById('lastname').innerHTML = me.lname;
+
+            var sql = `select nickname from Users where id = '${me.id}'`
+            var object = await osql.connect(sql);
+            var myNickname = object[0].nickname;
+            document.getElementById('my-nickname').innerHTML = myNickname;
+
             await displaySchedule();
         });
 
@@ -97,7 +102,10 @@
 <body>
     <header>
         <div style="text-align: right;">
-            ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
+            <!--
+                ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
+            -->
+            ようこそ<span id="my-nickname"></span>さん
             <a href="index.html">top</a>
         </div>
         <h1 id="header"><span id="groupName"></span>の<span id="block"></span>のページ</h1>

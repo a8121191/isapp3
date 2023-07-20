@@ -17,12 +17,17 @@
 
         $(document).ready(async function () {
             me = await osql.getMe();
-            document.getElementById('firstname').innerHTML = me.fname;
-            document.getElementById('lastname').innerHTML = me.lname;
+            //document.getElementById('firstname').innerHTML = me.fname;
+            //document.getElementById('lastname').innerHTML = me.lname;
             var sql = `select * from Rooms where id = ${roomId};`;
             var objects = await osql.connect(sql);
             var room = objects[0];
             document.getElementById('roomname').innerHTML = room.name;
+
+            var sql = `select nickname from Users where id = '${me.id}'`
+            var object = await osql.connect(sql);
+            var myNickname = object[0].nickname;
+            document.getElementById('my-nickname').innerHTML = myNickname;
 
             await displayMembers();
             setInterval(displayMembers, 2000);
@@ -82,7 +87,10 @@
 <body>
     <header>
         <div style="text-align: right;">
-            ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
+            <!--
+                ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
+            -->
+            ようこそ<span id="my-nickname"></span>さん
             <a href="index.html">top</a>
         </div>
         <h1 class="title">共有時間割ページへ<br>チーム： <span id="roomname"></span></h1>

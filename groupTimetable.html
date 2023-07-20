@@ -17,12 +17,17 @@
 
         $(document).ready(async function () {
             me = await osql.getMe();
-            document.getElementById('firstname').innerHTML = me.fname;
-            document.getElementById('lastname').innerHTML = me.lname;
+            //document.getElementById('firstname').innerHTML = me.fname;
+            //document.getElementById('lastname').innerHTML = me.lname;
 
             var sql = `select name from Rooms where id = ${groupId};`;
             var object = await osql.connect(sql);
             document.getElementById('roomname').innerHTML = object[0].name;
+
+            var sql = `select nickname from Users where id = '${me.id}'`
+            var object = await osql.connect(sql);
+            var myNickname = object[0].nickname;
+            document.getElementById('my-nickname').innerHTML = myNickname;
 
             await groupTimetable();
         });
@@ -127,7 +132,10 @@
 <body>
     <header>
         <div style="text-align: right;">
-            ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
+            <!--
+                ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
+            -->
+            ようこそ<span id="my-nickname"></span>さん
             <a href="index.html">top</a>
         </div>
         <h1>時間割共有ページ<br>チーム： <span id="roomname"></span></h1>
@@ -135,7 +143,7 @@
     </header>
 
     <div>
-    入室しても予定が反映されない場合は更新ボタンを押してください
+        入室しても予定が反映されない場合は更新ボタンを押してください
     </div>
 
     <button onclick="reloadPage()">更新</button>

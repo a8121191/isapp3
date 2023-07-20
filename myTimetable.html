@@ -17,8 +17,13 @@
 
         $(document).ready(async function () {
             me = await osql.getMe();
-            document.getElementById('firstname').innerHTML = me.fname;
-            document.getElementById('lastname').innerHTML = me.lname;
+            //document.getElementById('firstname').innerHTML = me.fname;
+            //document.getElementById('lastname').innerHTML = me.lname;
+
+            var sql = `select nickname from Users where id = '${me.id}'`
+            var object = await osql.connect(sql);
+            var myNickname = object[0].nickname;
+            document.getElementById('my-nickname').innerHTML = myNickname;
 
             await myTimetable();
         });
@@ -105,7 +110,10 @@
     <header>
 
         <div style="text-align: right;">
-            ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
+            <!--
+                ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
+            -->
+            ようこそ<span id="my-nickname"></span>さん
             <a href="index.html">top</a>
         </div>
         <h1 class="title">マイ時間割</h1>
