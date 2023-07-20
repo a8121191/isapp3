@@ -25,6 +25,7 @@
             document.getElementById('roomname').innerHTML = object[0].name;
 
             await groupTimetable();
+            setInterval(groupTimetable, 15000);
         });
 
         function logout() {
