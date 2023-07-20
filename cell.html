@@ -37,6 +37,7 @@
         var affiliation = osql.getParam('affiliation');
         console.log(affiliation);
         var block = ''
+        var displayAff = 10000;
 
         $(document).ready(async function () {
             me = await osql.getMe();
@@ -71,6 +72,7 @@
             //グループの時間割からきた→グループの時間割を表示
             var sql = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${affiliation}`;
             var object = await osql.connect(sql);
+            displayAff = affiliation;
 
 
             //グループの時間割からきて、そのコマのグループで登録した時間割がない場合
@@ -78,6 +80,7 @@
             if (affiliation != 0 && object.length == 0) {
                 var sql2 = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${0}`;
                 object = await osql.connect(sql2);
+                displayAff = 0;
             }
 
             if (object.length != 0) {
@@ -124,7 +127,7 @@
         async function deleteSchedule() {
             var ans = window.confirm('本当にいいんですね？');
             if (ans == true) {
-                var sql = `delete from Plans where user_id = '${me.id}' and block = '${block}' and (affiliation = ${affiliation} or affiliation = ${0})`;
+                var sql = `delete from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${displayAff}`;
                 await osql.connect(sql);
             }
             history.back();
