@@ -86,6 +86,10 @@
             location.href = `cell.html?row=${row}&column=${column}&affiliation=${groupId}`;
         }
 
+        function goBack() {
+            history.back();
+        }
+
     </script>
 
 </head>
@@ -105,9 +109,7 @@
     <br>
     <button onclick="toGroupSchedule()">自分の予定を変更</button>
 
-    <footer>
-        <a href="groupTimetable.html" class="footer-button">戻る</a>
-    </footer>
+    <button onclick="goBack()">戻る</button>
 </body>
 
 </html>
