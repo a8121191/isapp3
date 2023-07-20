@@ -93,7 +93,7 @@
                 var affiliationHere = object[0].affiliation;
                 var affiliationSentence = '';
                 if (affiliationHere == 0) {
-                    affiliationSentence = '自分の時間割ページで登録した予定です.どのグループでも閲覧可能な予定です';
+                    affiliationSentence = '自分の時間割ページで登録した予定です.グループ画面でも閲覧可能です';
                 } else {
                     affiliationSentence = 'このグループ画面でのみ閲覧可能な予定です'
                 }
@@ -105,18 +105,28 @@
             var newSchedule = document.getElementById('schedule').value;
             var newAvailability = document.getElementById('select-availability').value;
 
-            var sql = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${affiliation}`;
-            var object = await osql.connect(sql);
-            if (object.length == 0) {
-                var sql = `insert into Plans (block,schedule,availability,affiliation,user_id) values ('${block}','${newSchedule}','${newAvailability}',${affiliation},'${me.id}')`
+            var sql = `select * from Plans where user_id = '${me.id}' and block = '${block}'`;
+            var objects = await osql.connect(sql);
+            if (objects.length == 0) {
+                //予定がなかったらinsert
+                sql = `insert into Plans (block,schedule,availability,affiliation,user_id) values ('${block}','${newSchedule}','${newAvailability}',${affiliation},'${me.id}')`
                 //予定なしで入れたらどうなる？ →予定はなし（''）で入る
                 await osql.connectInsert(sql);
             } else {
-                var sql = `update Plans set schedule = '${newSchedule}' where user_id = '${me.id}' and block = '${block}' and affiliation = ${affiliation}`;
-                //予定をなくした（''にした）場合に、どうするか　（そのデータごと消すかそのままか）
-                await osql.connect(sql);
-                var sql = `update Plans set availability = '${newAvailability}' where user_id = '${me.id}' and block = '${block}' and affiliation = ${affiliation}`;
-                await osql.connect(sql);
+                //予定があったらupdate
+
+                sql = `select * from Plans where user_id = '${me.id}' and block = '${block}' not affiliation =${affiliation};`;
+                var object = await osql.connect(sql);
+                if (object.length != 1) {
+                    alert("このコマには、既に予定があります。その予定を削除してから登録してください。");
+                } else {
+                    //scheduleをupdate
+                    sql = `update Plans set schedule = '${newSchedule}' where user_id = '${me.id}' and block = '${block}' and affiliation = ${affiliation}`;
+                    await osql.connect(sql);
+                    //availablityをupdate
+                    sql = `update Plans set availability = '${newAvailability}' where user_id = '${me.id}' and block = '${block}' and affiliation = ${affiliation}`;
+                    await osql.connect(sql);
+                }
             }
             history.back();;
         }
