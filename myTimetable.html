@@ -56,7 +56,7 @@
                         html = html + '<td>' + i + '</td>';
                     } else {
                         var block = date + String(i);
-                        var sql = `select schedule from Plans where block = '${block}' AND user_id = '${me.id}'`;
+                        var sql = `select schedule from Plans where block = '${block}' AND user_id = '${me.id}' and affiliation = ${0};`;
                         var scheduleArray = await osql.connect(sql);
                         var scheduleEach = '';
                         if (scheduleArray.length != 0) {
