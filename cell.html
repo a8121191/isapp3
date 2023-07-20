@@ -62,16 +62,26 @@
         async function displayPlans() {
             document.getElementById('block2').innerHTML = block;
 
+            var scheduleHere = ''
+
+            //自分の時間割からきた→自分の時間割を表示
+            //グループの時間割からきた→グループの時間割を表示
             var sql = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${affiliation}`;
             var object = await osql.connect(sql);
 
-            if (affiliation != 0 || object.length == 0) {
-                sql = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${0}`;
-                object = await osql.connect(sql);
+
+            //グループの時間割からきて、そのコマのグループで登録した時間割がない場合
+            //自分の時間割があれば表示する
+            if (affiliation != 0 && object.length == 0) {
+                var sql2 = `select * from Plans where user_id = '${me.id}' and block = '${block}' and affiliation = ${0}`;
+                object = await osql.connect(sql2);
             }
 
             if (object.length != 0) {
-                var scheduleHere = object[0].schedule;
+                scheduleHere = object[0].schedule;
+            }
+
+            if (object.length != 0) {
                 document.getElementById('schedule').value = scheduleHere;
 
                 var availabilityHere = object[0].availability;
@@ -114,6 +124,7 @@
                 var sql = `delete from Plans where user_id = '${me.id}' and block = '${block}' and (affiliation = ${affiliation} or affiliation = ${0})`;
                 await osql.connect(sql);
             }
+            history.back();
         }
 
         function goBack() {
