@@ -17,8 +17,8 @@
 
         $(document).ready(async function () {
             me = await osql.getMe();
-            //document.getElementById('firstname').innerHTML = me.fname;
-            //document.getElementById('lastname').innerHTML = me.lname;
+            document.getElementById('firstname').innerHTML = me.fname;
+            document.getElementById('lastname').innerHTML = me.lname;
 
             var sql = `select name from Rooms where id = ${groupId};`;
             var object = await osql.connect(sql);
